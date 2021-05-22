@@ -12,7 +12,7 @@ localStorage.setItem("status", "start");
 
 
 var fetchNow = function () {
-    fetch("https://api.hive.blog", {
+    fetch(apinode, {
         body: localStorage.getItem("indexreq"),
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -39,7 +39,8 @@ var fetchNow = function () {
 
                     } else {
 
-                        document.getElementById("download").style.display = "block";
+                        document.getElementById("step1").style.display = `none`;
+                        document.getElementById("downloadPosts").innerHTML = `<button onclick="downloadPosts()">Download Posts</button>`;
                         localStorage.setItem("status", "complete")
                         return console.log("requst complete");
 
@@ -73,11 +74,11 @@ function fetchPosts() {
 
 
 function downloadPosts() {
-
+    document.getElementById("downloadPosts").innerHTML = `<progress class="pure-material-progress-circular"/>`;
     console.log("downloading");
     var zip = new JSZip();
     for (var i = 0, len = localStorage.length; i < len; ++i) {
-        
+
         if (JSON.parse(localStorage.getItem(localStorage.key(i)).includes("post_id")) !== false) {
             let currentPost = JSON.parse(localStorage.getItem(localStorage.key(i)))
             console.log(currentPost.permlink);
@@ -87,11 +88,22 @@ function downloadPosts() {
     zip.generateAsync({ type: "blob" })
         .then(function (blob) {
             saveAs(blob, localStorage.getItem("hiveaccount") + ".zip");
+            document.getElementById("downloadPosts").innerHTML = `All Done`;
         });
 
 }
 
 
+function reset() {
+    document.getElementById("step1").style.display = `block`;
+    document.getElementById('status').innerHTML = '0';
+    document.getElementById("downloadPosts").innerHTML = ``;
+    localStorage.clear();
+    alert('cache cleared')
+}
 
 
-
+window.onload = function () {
+    console.log('ready to go');
+    localStorage.clear();
+};
