@@ -1,5 +1,4 @@
 let apinode = "https://api.deathwing.me";
-
 let startpermlink = ""
 let beforedate = ""
 let xhr = new XMLHttpRequest();
@@ -19,9 +18,6 @@ var fetchNow = function () {
         },
         method: "POST"
     }).then(response => response.json()).then(data => {
-
-
-
         if (localStorage.getItem("status") !== "complete") {
             if (data !== undefined) {
                 console.log(data.result[0])
@@ -36,23 +32,18 @@ var fetchNow = function () {
                             console.log("request data updated")
                             localStorage.setItem("indexreq", `{"jsonrpc":"2.0", "method":"bridge.get_account_posts", "params":{"sort":"posts","account": "` + data.result[i].author + `","start_permlink": "` + data.result[i].permlink + `","start_author": "` + localStorage.getItem("hiveaccount") + `",  "limit": 20}, "id":1}`);
                         }
-
                     } else {
-
                         document.getElementById("step1").style.display = `none`;
                         document.getElementById("downloadPosts").innerHTML = `<button onclick="downloadPosts()">Download Posts</button>`;
                         localStorage.setItem("status", "complete")
                         return console.log("requst complete");
-
                     }
                 }
-
             } else {
                 console.log(response.result)
                 localStorage.setItem("status", "complete")
             }
         }
-
         if (localStorage.getItem("status") !== "complete") {
             fetchNow();
         } else {
@@ -60,7 +51,6 @@ var fetchNow = function () {
         }
     });
 }
-
 function fetchPosts() {
     localStorage.setItem("hiveaccount", document.getElementById("user").value);
     if (localStorage.getItem("indexreq") == undefined) {
@@ -73,25 +63,24 @@ function fetchPosts() {
 }
 
 
+
+
+
+
 function downloadPosts() {
     document.getElementById("downloadPosts").innerHTML = `<progress class="pure-material-progress-circular"/>`;
     console.log("downloading");
     var zip = new JSZip();
     for (var i = 0, len = localStorage.length; i < len; ++i) {
-
         if (JSON.parse(localStorage.getItem(localStorage.key(i)).includes("post_id")) !== false) {
-
             let currentPost = JSON.parse(localStorage.getItem(localStorage.key(i)));
-            
             console.log(currentPost.permlink);
-            
             // set frontmatter for the generated .md file
-            let frontmatter = `---\ntags: [`+currentPost.json_metadata.tags+`]\ntitle: [hive]` +currentPost.title+`\ncreated: '2021-03-28T08:42:30.455Z'\nmodified: '2021-05-16T00:17:19.092Z'\n---\n\n# `
-
+            let frontmatter = `---\ntags: [` + currentPost.json_metadata.tags + `]\ntitle: [hive]` + currentPost.title + `\ncreated: '2021-03-28T08:42:30.455Z'\nmodified: '2021-05-16T00:17:19.092Z'\n---\n\n# `
             // add file to zip
             zip.file(localStorage.getItem("hiveaccount") + "/" + currentPost.created.substring(0, 10) + "-"
-             + currentPost.permlink 
-             + ".md", frontmatter + currentPost.title + "\n" + currentPost.body);
+                + currentPost.permlink
+                + ".md", frontmatter + currentPost.title + "\n" + currentPost.body);
         }
     }
     zip.generateAsync({ type: "blob" })
@@ -99,8 +88,11 @@ function downloadPosts() {
             saveAs(blob, localStorage.getItem("hiveaccount") + ".zip");
             document.getElementById("downloadPosts").innerHTML = `All Done`;
         });
-
 }
+
+
+
+
 
 
 function reset() {
@@ -110,6 +102,10 @@ function reset() {
     localStorage.clear();
     alert('cache cleared')
 }
+
+
+
+
 
 
 window.onload = function () {
