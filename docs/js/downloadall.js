@@ -80,9 +80,18 @@ function downloadPosts() {
     for (var i = 0, len = localStorage.length; i < len; ++i) {
 
         if (JSON.parse(localStorage.getItem(localStorage.key(i)).includes("post_id")) !== false) {
-            let currentPost = JSON.parse(localStorage.getItem(localStorage.key(i)))
+
+            let currentPost = JSON.parse(localStorage.getItem(localStorage.key(i)));
+            
             console.log(currentPost.permlink);
-            zip.file(localStorage.getItem("hiveaccount") + "posts/" + currentPost.created.substring(0, 10) + "-" + currentPost.permlink + ".md", "#" + currentPost.title + "\n" + currentPost.body);
+            
+            // set frontmatter for the generated .md file
+            let frontmatter = `---\ntags: [`+currentPost.json_metadata.tags+`]\ntitle: [hive]` +currentPost.title+`\ncreated: '2021-03-28T08:42:30.455Z'\nmodified: '2021-05-16T00:17:19.092Z'\n---\n\n# `
+
+            // add file to zip
+            zip.file(localStorage.getItem("hiveaccount") + "/" + currentPost.created.substring(0, 10) + "-"
+             + currentPost.permlink 
+             + ".md", frontmatter + currentPost.title + "\n" + currentPost.body);
         }
     }
     zip.generateAsync({ type: "blob" })
