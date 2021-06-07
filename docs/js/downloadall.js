@@ -91,8 +91,10 @@ function downloadPosts() {
                 // set frontmatter for the generated .md file
                 let frontmatter = `---\ntags: [` + currentPost.json_metadata.tags + `]\ntitle: [hive]` + currentPost.title + `\ncreated: '` + currentPost.created + `'\nmodified: '` + currentPost.created + `'\n---\n\n# `
                 // add file to zip
+                parsed = currentPost.body.split('<center>').join('<center>\n\n');
+                parsed = parsed.split('</center>').join('\n\n</center>');
                 zip.file(localStorage.getItem("hiveaccount") + "/" + currentPost.created.substring(0, 10) + "-" + currentPost.author + "-" + currentPost.permlink
-                    + ".md", frontmatter + currentPost.title + "\n" + currentPost.body);
+                    + ".md", frontmatter + currentPost.title + "\n" + parsed);
             }
 
         }
