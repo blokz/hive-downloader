@@ -60,6 +60,7 @@ var fetchNow = function () {
     });
 }
 function fetchPosts() {
+    whoami = document.getElementById("user").value;
     localStorage.setItem("hiveaccount", document.getElementById("user").value);
     if (localStorage.getItem("indexreq") == undefined) {
         let requestData = '{"jsonrpc":"2.0", "method":"bridge.get_account_posts", "params":{"sort":"posts","account": "' + localStorage.getItem("hiveaccount") + '",  "limit": 20}, "id":1}';
@@ -99,7 +100,8 @@ function downloadPosts() {
     zip.generateAsync({ type: "blob" })
         .then(function (blob) {
             saveAs(blob, localStorage.getItem("hiveaccount") + ".zip");
-            document.getElementById("downloadPosts").innerHTML = `All Done`;
+            document.getElementById("downloadPosts").innerHTML = `Downloading posts for ` + whoami + `<hr />`;
+            reset();
         });
 }
 
@@ -111,9 +113,8 @@ function downloadPosts() {
 function reset() {
     document.getElementById("step1").style.display = `block`;
     document.getElementById('status').innerHTML = '0';
-    document.getElementById("downloadPosts").innerHTML = ``;
+    document.getElementById("downloadPosts").innerHTML += ``;
     localStorage.clear();
-    alert('cache cleared')
 }
 
 
