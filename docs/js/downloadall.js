@@ -6,9 +6,14 @@ let response = ""
 localStorage.setItem("status", "start");
 
 
-
-
-
+/*
+var string = "This is my compression test.";
+alert("Size of sample is: " + string.length);
+var compressed = LZString.compress(string);
+alert("Size of compressed sample is: " + compressed.length);
+string = LZString.decompress(compressed);
+alert("Sample is: " + string);
+*/
 
 var fetchNow = function () {
     fetch(apinode, {
@@ -26,8 +31,11 @@ var fetchNow = function () {
                     status++;
                     document.getElementById("status").innerHTML = status;
                     if (data.result[i] !== undefined) {
+                        //console.log('lets try this post:' + JSON.stringify(data.result[i]));
+                        key = "active_votes";
+                        delete data.result[i][key];
                         console.log('lets try this post:' + JSON.stringify(data.result[i]));
-                        localStorage.setItem(JSON.stringify(data.result[i].author) + "." + JSON.stringify(data.result[i].permlink), JSON.stringify(data.result[i]));
+                        localStorage.setItem(JSON.stringify(data.result[i].author) + "." + JSON.stringify(data.result[i].permlink), LZString.compress(JSON.stringify(data.result[i])));
                         if (data.result[i].permlink !== undefined) {
                             console.log("request data updated")
                             localStorage.setItem("indexreq", `{"jsonrpc":"2.0", "method":"bridge.get_account_posts", "params":{"sort":"posts","account": "` + data.result[i].author + `","start_permlink": "` + data.result[i].permlink + `","start_author": "` + localStorage.getItem("hiveaccount") + `",  "limit": 20}, "id":1}`);
@@ -72,15 +80,20 @@ function downloadPosts() {
     console.log("downloading");
     var zip = new JSZip();
     for (var i = 0, len = localStorage.length; i < len; ++i) {
-        if (JSON.parse(localStorage.getItem(localStorage.key(i)).includes("post_id")) !== false) {
-            let currentPost = JSON.parse(localStorage.getItem(localStorage.key(i)));
-            console.log(currentPost.permlink);
-            // set frontmatter for the generated .md file
-            let frontmatter = `---\ntags: [` + currentPost.json_metadata.tags + `]\ntitle: [hive]` + currentPost.title + `\ncreated: '2021-03-28T08:42:30.455Z'\nmodified: '2021-05-16T00:17:19.092Z'\n---\n\n# `
-            // add file to zip
-            zip.file(localStorage.getItem("hiveaccount") + "/" + currentPost.created.substring(0, 10) + "-"
-                + currentPost.permlink
-                + ".md", frontmatter + currentPost.title + "\n" + currentPost.body);
+        if (localStorage.key(i) == "status" || localStorage.key(i) == "hiveaccount" || localStorage.key(i) == "indexreq") {
+            console.log('false') 
+        } else {
+           
+            if (JSON.parse(LZString.decompress(localStorage.getItem(localStorage.key(i))).includes("post_id")) !== false) {
+                let currentPost = JSON.parse(LZString.decompress(localStorage.getItem(localStorage.key(i))));
+                console.log(currentPost.permlink);
+                // set frontmatter for the generated .md file
+                let frontmatter = `---\ntags: [` + currentPost.json_metadata.tags + `]\ntitle: [hive]` + currentPost.title + `\ncreated: '` + currentPost.created + `'\nmodified: '` + currentPost.created + `'\n---\n\n# `
+                // add file to zip
+                zip.file(localStorage.getItem("hiveaccount") + "/" + currentPost.created.substring(0, 10) + "-" + currentPost.author + "-" + currentPost.permlink
+                    + ".md", frontmatter + currentPost.title + "\n" + currentPost.body);
+            }
+
         }
     }
     zip.generateAsync({ type: "blob" })
