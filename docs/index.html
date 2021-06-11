@@ -5,50 +5,115 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Hive Post Downloader</title>
+  <title>$Hive Post Downloader</title>
   <meta name="description" content="a tool to download all your hive posts">
   <meta name="author" content="blokz.io">
 
   <link rel="stylesheet" href="./css/styles.css?v=1.0">
-  <script src="./js/jszip.min.js"></script>
-  <script src="./js/FileSaver.min.js"></script>
   <script src="./js/downloadall.js" defer></script>
+
+  <!-- https://stuk.github.io/jszip/ -->
+  <script src="./js/jszip.min.js"></script>
+
+  <!-- https://github.com/eligrey/FileSaver.js -->
+  <script src="./js/FileSaver.min.js"></script>
+
+  <!-- https://pieroxy.net/blog/pages/lz-string/index.html -->
   <script src="./js/lz-string.js"></script>
+
+
+  <link rel="stylesheet" href="./css/material.min.css">
+  <script src="./js/material.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
 </head>
 
 <body>
-  <div id="main">
-    <div id="maincontent">
-      <div id="downloadPosts">
 
+  <div id="main">
+
+    <!-- material lite card -->
+    <div class="wizard mdl-card mdl-shadow--2dp">
+      <h1>$hive Post Downloader</h1>
+      <div class="mdl-card__title">
+
+        <div class="mdl-card__title-text">
+          
+          Your Account,<br /> Your Data
+        </div>
+        <div id="hive"><img src="./images/hive_circle.png" alt="$hive logo" height="64px" width="64px"></div>
       </div>
-      <div id='step1'>
-        <div style='padding: .1em'><label for="username">$hive username:</label></div>
-        <div style='padding: .1em'><input type="text" id="user" name="username" value=""></div>
-        <div style='padding: .1em'><button onclick="fetchPosts()">Fetch Posts</button></div>
+      <div class="mdl-card__supporting-text">
+        Export a copy of your hive posts in markdown format to use with apps and services outside the $hive
+        ecosystem
       </div>
-      Posts retrieved<div id="status">0</div>
+      <div class="mdl-card__actions mdl-card--border">
+        <div id="step1">
+          <form onsubmit="fetchPosts(); return false">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 150px;">
+          <label class="mdl-textfield__label" for="username">Username</label> <input class="mdl-textfield__input" type="text" id="user" name="username" value="" style="width: 150px;">
+          </div></form>
+          <div style="text-align: right; width: 100%;">
+          <button onclick="fetchPosts()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i class="material-icons">arrow_forward</i></button>
+        </div>
+        </div>
+      </div>
 
     </div>
+    <!-- end material lite card -->
+
   </div>
 
-  <div style="padding: 1em;" id='faq-about'>
-    <hr />
-    <h3>Instructions</h3>
-    Enter a valid hive username and click 'Fetch Posts', upon completion of fetching said users posts, a 'Download
-    Posts' button will appear. <br />
-    Once Clicking Download Posts, please wait for the file save dialog to appear or download to begin, this will take
-    some time depending on the number of posts. <br />
-    before downloading posts for a second user, please click <button onclick="reset()">Clear Localstorage</button>.
-    <br />
-    <h3>Current Issues</h3>
-    Currently this tool uses localstorage to store all posts, this doesn't work for users with a LOT of very long posts,
-    as localstorage is limited to around 5mb in most browsers. <br />
+
+
+
+
+
+
+  <div style="padding: 1em;" id='mainContent'>
+    <div style="margin: auto; justify-content: center; text-align: center; width: 99%;" onclick="window.scrollTo(0, 0);">^ ^ ^ top ^ ^ ^</div>
+    <div id="wizardbottom">
+
+
+      <div id="step2">
+        <div id="downloadPosts">
+          <!-- populated by ./js/downloadall.js-->
+        </div>
+        Posts retrieved<div id="status">0</div>
+      </div>
+
+    </div>
+
     <hr />
     This tool uses <a href='https://github.com/eligrey/FileSaver.js'>FileSaver</a> to prompt to download file as well as
     <a href='https://github.com/Stuk/jszip'>JSZip</a> to zip the posts.
-    All posts are currently saved in localStorage and the filedownload stored in ram.
+    All posts are temporarily saved to localStorage and the filedownload stored in ram while generating zip.
+    For compression of posts in localstorage <a href="https://pieroxy.net/blog/pages/lz-string/index.html">lz-string</a>.
+    <hr />
+
+    <h5>Current Issues</h5>
+    none known
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>

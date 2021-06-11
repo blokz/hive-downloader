@@ -15,6 +15,8 @@ string = LZString.decompress(compressed);
 alert("Sample is: " + string);
 */
 
+document.getElementById("step2").style.display = `none`;
+
 var fetchNow = function () {
     fetch(apinode, {
         body: localStorage.getItem("indexreq"),
@@ -29,6 +31,7 @@ var fetchNow = function () {
                 for (i = 0; i < 20; i++) {
                     status = parseInt(document.getElementById("status").innerHTML);
                     status++;
+
                     document.getElementById("status").innerHTML = status;
                     if (data.result[i] !== undefined) {
                         //console.log('lets try this post:' + JSON.stringify(data.result[i]));
@@ -42,7 +45,7 @@ var fetchNow = function () {
                         }
                     } else {
                         document.getElementById("step1").style.display = `none`;
-                        document.getElementById("downloadPosts").innerHTML = `<button onclick="downloadPosts()">Download Posts</button>`;
+                        document.getElementById("step2").innerHTML = `<stong>Archive Created</strong><br /><button class="mdl-button mdl-js-button mdl-button--raised" onclick="downloadPosts()">Download Posts</button>`;
                         localStorage.setItem("status", "complete")
                         return console.log("requst complete");
                     }
@@ -60,8 +63,12 @@ var fetchNow = function () {
     });
 }
 function fetchPosts() {
+    document.getElementById('mainContent').scrollIntoView();
+    document.getElementById("step1").style.display = `none`;
+    document.getElementById("step2").style.display = `block`;
     whoami = document.getElementById("user").value;
     localStorage.setItem("hiveaccount", document.getElementById("user").value);
+    document.getElementById('status').innerHTML = '0';
     if (localStorage.getItem("indexreq") == undefined) {
         let requestData = '{"jsonrpc":"2.0", "method":"bridge.get_account_posts", "params":{"sort":"posts","account": "' + localStorage.getItem("hiveaccount") + '",  "limit": 20}, "id":1}';
         localStorage.setItem("indexreq", requestData);
@@ -77,14 +84,15 @@ function fetchPosts() {
 
 
 function downloadPosts() {
-    document.getElementById("downloadPosts").innerHTML = `<progress class="pure-material-progress-circular"/>`;
+
+    document.getElementById("step2").innerHTML = `<progress class="pure-material-progress-circular"/>`;
     console.log("downloading");
     var zip = new JSZip();
     for (var i = 0, len = localStorage.length; i < len; ++i) {
         if (localStorage.key(i) == "status" || localStorage.key(i) == "hiveaccount" || localStorage.key(i) == "indexreq") {
-            console.log('false') 
+            console.log('false')
         } else {
-           
+
             if (JSON.parse(LZString.decompress(localStorage.getItem(localStorage.key(i))).includes("post_id")) !== false) {
                 let currentPost = JSON.parse(LZString.decompress(localStorage.getItem(localStorage.key(i))));
                 console.log(currentPost.permlink);
@@ -102,22 +110,18 @@ function downloadPosts() {
     zip.generateAsync({ type: "blob" })
         .then(function (blob) {
             saveAs(blob, localStorage.getItem("hiveaccount") + ".zip");
-            document.getElementById("downloadPosts").innerHTML = `Downloading posts for ` + whoami + `<hr />`;
-            reset();
+            document.getElementById("step2").innerHTML = `Downloading posts for ` + whoami + `<br /> Download Another?<br /><button class="mdl-button mdl-js-button mdl-button--raised" onclick='location.reload();window.scrollTo(0, 0);'>Yes</button>`;
+            document.getElementById("step2").style.display = `block`;
+
+            //document.getElementById("step2").style.display = `none`;
+           // document.getElementById("step2").innerHTML = `<div id="downloadPosts"><!-- populated by ./js/downloadall.js--></div>Posts retrieved<div id="status">0</div>`;
+            localStorage.clear();
         });
 }
 
 
 
 
-
-
-function reset() {
-    document.getElementById("step1").style.display = `block`;
-    document.getElementById('status').innerHTML = '0';
-    document.getElementById("downloadPosts").innerHTML += ``;
-    localStorage.clear();
-}
 
 
 

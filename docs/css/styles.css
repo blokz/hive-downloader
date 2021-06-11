@@ -1,34 +1,58 @@
 body {
     margin: 0px;
     padding: 0px;
+    background-color: #212529;
 }
 
 #main {
     height: 100vh;
     text-align: center;
     justify-content: center;
-    border: 1px solid black;
+
     padding: 0px;
-    margin: 0px; 
+    margin: auto; 
 
 }
 
-#maincontent {
-    background-color: azure;
-    padding: 2em;
-    margin: auto;
-    border: 1px solid black;
-    width: 40%;
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+
+
+#mainContent {
+    background-color: #f0f0f8;
+    border-top: #E31337 .1em dashed;
+    height: 100vh;
+    color: black;
+    width: 100%;
 }
 
 
+.wizard.mdl-card {
+    width: 80%;
+    text-align: center;
+    justify-content: center;
+    margin: auto; 
+    margin-top: 5em;
+    padding-top: 32px;
+  }
+  .wizard > .mdl-card__title {
+    color: #212529;
+    background: url('../assets/demos/welcome_card.jpg') center / cover;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
 
+  .wizard > .mdl-card__menu {
+    color: #212529;
+  }
 
+/* Coogle Material Design icon Font */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'),
+      local('MaterialIcons-Regular'),
+      url("../fonts/MaterialIcons-Regular.ttf") format('truetype');
+  }
 
 /* https://codepen.io/finnhvman/pen/bmNdNr */
 
