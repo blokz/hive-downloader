@@ -41,7 +41,7 @@
       <div class="mdl-card__title">
 
         <div class="mdl-card__title-text">
-          
+
           Your Account,<br /> Your Data
         </div>
         <div id="hive"><img src="./images/hive_circle.png" alt="$hive logo" height="64px" width="64px"></div>
@@ -54,11 +54,14 @@
         <div id="step1">
           <form onsubmit="fetchPosts(); return false">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 150px;">
-          <label class="mdl-textfield__label" for="username">Username</label> <input class="mdl-textfield__input" type="text" id="user" name="username" value="" style="width: 150px;">
-          </div></form>
+              <label class="mdl-textfield__label" for="username">Username</label> <input class="mdl-textfield__input"
+                type="text" id="user" name="username" value="" style="width: 150px;">
+            </div>
+          </form>
           <div style="text-align: right; width: 100%;">
-          <button onclick="fetchPosts()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i class="material-icons">arrow_forward</i></button>
-        </div>
+            <button onclick="fetchPosts()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i
+                class="material-icons">arrow_forward</i></button>
+          </div>
         </div>
       </div>
 
@@ -74,7 +77,8 @@
 
 
   <div style="padding: 1em;" id='mainContent'>
-    <div style="margin: auto; justify-content: center; text-align: center; width: 99%;" onclick="window.scrollTo(0, 0);">^ ^ ^ top ^ ^ ^</div>
+    <div style="margin: auto; justify-content: center; text-align: center; width: 99%;"
+      onclick="window.scrollTo(0, 0);">^ ^ ^ top ^ ^ ^</div>
     <div id="wizardbottom">
 
 
@@ -88,13 +92,14 @@
     </div>
 
     <hr />
-    This tool uses <a href='https://github.com/eligrey/FileSaver.js'>FileSaver</a> to prompt to download file as well as
-    <a href='https://github.com/Stuk/jszip'>JSZip</a> to zip the posts.
-    All posts are temporarily saved to localStorage and the filedownload stored in ram while generating zip.
-    For compression of posts in localstorage <a href="https://pieroxy.net/blog/pages/lz-string/index.html">lz-string</a>.
+    <h5>How it works:</h5>
+    All posts are temporarily saved to localStorage & encrypted with <a
+      href="https://pieroxy.net/blog/pages/lz-string/index.html">lz-string</a> to maximize storage space. <a
+      href='https://github.com/Stuk/jszip'>JSZip</a> is used to create a zip file for download, and finally <a
+      href='https://github.com/eligrey/FileSaver.js'>FileSaver</a> is used to prompt a file download.
     <hr />
 
-    <h5>Current Issues</h5>
+    <h5>Current Issues:</h5>
     none known
   </div>
 
