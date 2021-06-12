@@ -45,7 +45,7 @@ var fetchNow = function () {
                         }
                     } else {
                         document.getElementById("step1").style.display = `none`;
-                        document.getElementById("step2").innerHTML = `<stong>Archive Created</strong><br /><button class="mdl-button mdl-js-button mdl-button--raised" onclick="downloadPosts()">Download Posts</button>`;
+                        document.getElementById("step2").innerHTML = `<stong>Posts Downloaded</strong><br /><button class="mdl-button mdl-js-button mdl-button--raised" onclick="downloadPosts()">Create Archive & Download</button>`;
                         localStorage.setItem("status", "complete")
                         return console.log("requst complete");
                     }
