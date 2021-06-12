@@ -21,8 +21,8 @@ body {
     border-top: #E31337 .1em dashed;
     height: 100vh;
     color: black;
-    width: 100%;
-    margin: 0px;
+    width: 80%;
+    margin: auto;
     padding: 1em;
 }
 
@@ -37,7 +37,6 @@ body {
   }
   .wizard > .mdl-card__title {
     color: #212529;
-    background: url('../assets/demos/welcome_card.jpg') center / cover;
     display: grid;
     grid-template-columns: 3fr 1fr;
   }
