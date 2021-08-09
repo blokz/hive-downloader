@@ -1,0 +1,125 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>$Hive Post Downloader</title>
+  <meta name="description" content="a tool to download all your hive posts">
+  <meta name="author" content="blokz.io">
+  <link rel="shortcut icon" href="./images/favicon.png"/>
+
+  <link rel="stylesheet" href="./css/styles.css?v=1.0">
+  <script src="./js/downloadall.js" defer></script>
+
+  <!-- https://stuk.github.io/jszip/ -->
+  <script src="./js/jszip.min.js"></script>
+
+  <!-- https://github.com/eligrey/FileSaver.js -->
+  <script src="./js/FileSaver.min.js"></script>
+
+  <!-- https://pieroxy.net/blog/pages/lz-string/index.html -->
+  <script src="./js/lz-string.js"></script>
+
+
+  <link rel="stylesheet" href="./css/material.min.css">
+  <script src="./js/material.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+</head>
+
+<body>
+
+  <div id="main">
+<a href="./index.html">Current Version</a>
+    <!-- material lite card -->
+    <div class="wizard mdl-card mdl-shadow--2dp">
+      <h1>$hive Post Downloader</h1>
+      <div class="mdl-card__title">
+
+        <div class="mdl-card__title-text">
+
+          Your Account,<br /> Your Data
+        </div>
+        <div id="hive"><img src="./images/hive_circle.png" alt="$hive logo" height="64px" width="64px"></div>
+      </div>
+      <div class="mdl-card__supporting-text">
+        Export a copy of a users hive posts in markdown format to use with apps and services outside the $hive
+        ecosystem
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <div id="step1">
+          <form onsubmit="fetchPosts(); return false">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 150px;">
+              <label class="mdl-textfield__label" for="username">Username</label> <input class="mdl-textfield__input"
+                type="text" id="user" name="username" value="" style="width: 150px;">
+            </div>
+          </form>
+          <div style="text-align: right; width: 100%;">
+            <button onclick="fetchPosts()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i
+                class="material-icons">arrow_forward</i></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- end material lite card -->
+
+  </div>
+
+
+
+
+
+
+
+  <div style="padding: 1em;" id='mainContent'>
+    <div style="margin: auto; justify-content: center; text-align: center; width: 99%;"
+      onclick="window.scrollTo(0, 0);">^ ^ ^ top ^ ^ ^</div>
+    <div id="wizardbottom">
+
+
+      <div id="step2">
+        <div id="downloadPosts">
+          <!-- populated by ./js/downloadall.js-->
+        </div>
+        Posts retrieved<div id="status">0</div>
+      </div>
+
+    </div>
+
+    <hr />
+    <h5>How it works:</h5>
+    All posts are temporarily saved to localStorage & encrypted with <a
+      href="https://pieroxy.net/blog/pages/lz-string/index.html">lz-string</a> to maximize storage space. <a
+      href='https://github.com/Stuk/jszip'>JSZip</a> is used to create a zip file for download and finally <a
+      href='https://github.com/eligrey/FileSaver.js'>FileSaver</a> is used to prompt the file download.
+    <hr />
+
+    <h5>Current Issues:</h5>
+    none known
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
