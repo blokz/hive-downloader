@@ -1,7 +1,7 @@
 export default {
   build: {
     srcPath: './src',
-    outputPath: './public',
+    outputPath: './docs',
   },
   site: {
     title: '$hive export',
